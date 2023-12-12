@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Admin Panel</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <!-- Search bar -->
+        <li class="nav-item">
+          <span class="navbar-text mr-3">Welcome, {{welcome}}</span>
+        </li>
+      </ul>
+      <!-- User display name and logout -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <form class="form-inline" action="/admin/logged/:name" method="post">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="userfind" value="{{searchedValue}}">
+            {{!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> --}}
+          </form>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-outline-danger" href="/admin/signout">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container mt-5">
+    <div class="row">
+      <table class="table table-striped">
+        <tr>
+          <th>UserName</th>
+          <th>Email Address</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+        {{#each userDetails}}
+        <tr>
+          <td>{{this.username}}</td>
+          <td>{{this.email}}</td>
+          <td>
+            <form action="/admin/edit" method="get">
+              <input type="hidden" name="username" value="{{this.username}}">
+              <input type="hidden" name="email" value="{{this.email}}">
+              <button class="btn btn-success"><a style="text-decoration: none; color:#fff ">Edit</a></button>
+            </form>
+          </td>
+
+          <td>
+            <form action="/admin/delete/:name">
+              <input type="hidden" name="username" value="{{this.username}}">
+              <button class="btn btn-danger"><a style="text-decoration: none; color:#fff">Delete</a></button>
+            </form>
+          </td>
+        </tr>
+        {{/each}}
+      </table>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
